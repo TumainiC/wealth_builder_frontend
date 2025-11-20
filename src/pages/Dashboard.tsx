@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card } from '../components/ui/Card';
-import { TrendingUp, BookOpen, Target, Award, ArrowRight, Sparkles, Zap, Trophy } from 'lucide-react';
+import { TrendingUp, BookOpen, Target, Award, ArrowRight, Zap, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface UserStats {
@@ -42,15 +42,12 @@ export const Dashboard: React.FC = () => {
                     <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-                    <div className="flex items-center gap-3 mb-4">
-                        <Sparkles className="text-yellow-300 animate-pulse-glow" size={32} />
-                        <h1 className="text-4xl md:text-5xl font-bold text-white">
-                            Welcome back, {userName}!
-                        </h1>
-                    </div>
-                    <p className="text-xl text-white/90 max-w-2xl">
-                        Continue your financial learning journey and unlock new opportunities.
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                        Welcome back, {userName}!
+                    </h1>
+                    <p className="text-sm text-white/80">
+                        Continue your financial learning journey
                     </p>
                 </div>
             </div>
@@ -65,40 +62,37 @@ export const Dashboard: React.FC = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                        <div className="card-vibrant rounded-2xl p-6 md:p-8 hover-lift">
+                        <div className="card-vibrant rounded-2xl p-6 hover-lift">
                             <div className="flex items-start justify-between mb-4">
                                 <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
                                     <BookOpen className="text-white" size={24} />
                                 </div>
-                                <Zap className="text-yellow-400 animate-pulse" size={20} />
                             </div>
-                            <div className="text-4xl font-bold gradient-text mb-2">
+                            <div className="text-3xl font-bold gradient-text mb-2">
                                 {stats?.completedModules || 0}
                             </div>
                             <div className="text-gray-400 font-medium">Modules Completed</div>
                         </div>
 
-                        <div className="card-vibrant rounded-2xl p-6 md:p-8 hover-lift">
+                        <div className="card-vibrant rounded-2xl p-6 hover-lift">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500">
+                                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
                                     <Target className="text-white" size={24} />
                                 </div>
-                                <Zap className="text-yellow-400 animate-pulse" size={20} />
                             </div>
-                            <div className="text-4xl font-bold gradient-text-teal mb-2">
+                            <div className="text-3xl font-bold gradient-text mb-2">
                                 {stats?.totalQuizzesTaken || 0}
                             </div>
                             <div className="text-gray-400 font-medium">Quizzes Taken</div>
                         </div>
 
-                        <div className="card-vibrant rounded-2xl p-6 md:p-8 hover-lift">
+                        <div className="card-vibrant rounded-2xl p-6 hover-lift">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500 to-pink-500">
+                                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
                                     <Award className="text-white" size={24} />
                                 </div>
-                                <Zap className="text-yellow-400 animate-pulse" size={20} />
                             </div>
-                            <div className="text-4xl font-bold gradient-text mb-2">
+                            <div className="text-3xl font-bold gradient-text mb-2">
                                 {stats?.averageScore || 0}%
                             </div>
                             <div className="text-gray-400 font-medium">Average Score</div>
@@ -122,7 +116,6 @@ export const Dashboard: React.FC = () => {
                             </p>
                             <div className="inline-flex items-center gap-2 text-purple-400 font-medium">
                                 Browse Modules
-                                <Sparkles size={16} />
                             </div>
                         </div>
                     </Link>
@@ -130,18 +123,17 @@ export const Dashboard: React.FC = () => {
                     <Link to="/investments" className="block group">
                         <div className="card-vibrant rounded-2xl p-8 hover-lift h-full">
                             <div className="flex items-start justify-between mb-6">
-                                <div className="p-4 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500">
+                                <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500">
                                     <TrendingUp className="text-white" size={32} />
                                 </div>
-                                <ArrowRight className="text-gray-400 group-hover:text-teal-400 transition-colors" size={24} />
+                                <ArrowRight className="text-gray-400 group-hover:text-purple-400 transition-colors" size={24} />
                             </div>
                             <h3 className="text-2xl font-bold text-white mb-3">Explore Investments</h3>
                             <p className="text-gray-400 mb-4">
                                 Discover investment opportunities tailored for Kenya
                             </p>
-                            <div className="inline-flex items-center gap-2 text-teal-400 font-medium">
+                            <div className="inline-flex items-center gap-2 text-purple-400 font-medium">
                                 View Opportunities
-                                <Sparkles size={16} />
                             </div>
                         </div>
                     </Link>

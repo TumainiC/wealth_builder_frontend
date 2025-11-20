@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { BookOpen, TrendingUp, User, LogOut, Home, Sparkles, Menu, X, ChevronRight } from 'lucide-react';
+import { BookOpen, TrendingUp, User, LogOut, Home, Menu, X, ChevronRight } from 'lucide-react';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { logout } = useAuth();
@@ -46,7 +46,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         <div className="flex items-center justify-between">
                             <Link to="/dashboard" className="flex items-center space-x-2 group">
                                 <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    <Sparkles className="text-white" size={20} />
                                 </div>
                                 <span className="font-bold text-xl gradient-text">Wealth Builder</span>
                             </Link>
@@ -114,7 +113,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         </button>
                         <Link to="/dashboard" className="flex items-center space-x-2">
                             <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                                <Sparkles className="text-white" size={16} />
+
                             </div>
                             <span className="font-bold gradient-text">Wealth Builder</span>
                         </Link>

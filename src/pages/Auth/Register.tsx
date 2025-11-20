@@ -142,7 +142,6 @@ export const Register: React.FC = () => {
                                 'Creating Account...'
                             ) : (
                                 <>
-                                    <Sparkles size={20} />
                                     Create Account
                                 </>
                             )}
