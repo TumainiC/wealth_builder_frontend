@@ -1,218 +1,210 @@
 @import "tailwindcss";
 
-/* Root Variables for Vibrant Design System */
+/* Clean White Design System */
+
+/* Color Palette */
 :root {
-    --gradient-purple-dream: linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #3b82f6 100%);
-    --gradient-teal-burst: linear-gradient(135deg, #14b8a6 0%, #10b981 50%, #06b6d4 100%);
-    --gradient-sunset: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #ec4899 100%);
-    --gradient-ocean: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
+    --electric-blue: #0D24F3;
+    --white: #FFFFFF;
+    --light-grey: #F2F4F8;
+    --black: #000000;
+    --light-blue: #E3E8FF;
+    --gold: #FFD700;
+    --green: #10B981;
+    --text-grey: #6B7280;
 }
 
-/* Dark Theme Base */
-body {
-    background-color: #0f172a;
-    color: #e2e8f0;
-}
+/* Typography - Modern Sans-Serif */
+@layer base {
+    body {
+        font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: var(--white);
+        color: var(--black);
+    }
 
-/* Custom Animations */
-@keyframes pulse-glow {
-    0%, 100% {
-        opacity: 0.6;
-        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+    h1 {
+        @apply text-3xl font-bold text-black;
     }
-    50% {
-        opacity: 0.9;
-        box-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
-    }
-}
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+    h2 {
+        @apply text-2xl font-bold text-black;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    h3 {
+        @apply text-lg font-semibold text-black;
     }
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
+/* Pill-Shaped Buttons */
+@layer components {
+    .btn-pill {
+        @apply rounded-full px-8 py-3 font-medium transition-all duration-200;
+        box-shadow: 0 4px 12px rgba(13, 36, 243, 0.15);
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+
+    .btn-pill-primary {
+        @apply btn-pill text-white;
+        background-color: var(--electric-blue);
+    }
+
+    .btn-pill-primary:hover {
+        background-color: #0A1DC2;
+        box-shadow: 0 6px 16px rgba(13, 36, 243, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .btn-pill-secondary {
+        @apply btn-pill text-black bg-white border-2;
+        border-color: var(--electric-blue);
+        color: var(--electric-blue);
+    }
+
+    .btn-pill-secondary:hover {
+        background-color: var(--light-blue);
+    }
+
+    /* White Card Component */
+    .card-white {
+        @apply bg-white rounded-2xl p-6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .card-white:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+    }
+
+    /* Minimal Sidebar */
+    .sidebar-item {
+        @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all;
+    }
+
+    .sidebar-item:hover {
+        background-color: var(--light-grey);
+    }
+
+    .sidebar-item-active {
+        @apply sidebar-item;
+        background-color: var(--light-blue);
+        color: var(--electric-blue);
+        font-weight: 500;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+        @apply h-2 rounded-full overflow-hidden;
+        background-color: var(--light-grey);
+    }
+
+    .progress-fill {
+        @apply h-full rounded-full;
+        background-color: var(--green);
+        transition: width 0.3s ease;
+    }
+
+    /* Badge/Chip */
+    .badge {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    }
+
+    .badge-gold {
+        @apply badge;
+        background-color: #FEF3C7;
+        color: #92400E;
+    }
+
+    .badge-blue {
+        @apply badge;
+        background-color: var(--light-blue);
+        color: var(--electric-blue);
+    }
+
+    /* Input Fields */
+    .input-clean {
+        @apply w-full px-4 py-3 border border-gray-200 rounded-xl bg-white text-black;
+        @apply focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100;
+        transition: all 0.2s ease;
+    }
+
+    /* Grid Container */
+    .grid-cards {
+        @apply grid gap-6;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
+/* Animations */
+@layer utilities {
+    .pulse-blue {
+        animation: pulse-blue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-    50% {
-        transform: translateY(-10px);
+
+    @keyframes pulse-blue {
+
+        0%,
+        100% {
+            box-shadow: 0 0 0 0 rgba(13, 36, 243, 0.7);
+        }
+
+        50% {
+            box-shadow: 0 0 0 10px rgba(13, 36, 243, 0);
+        }
+    }
+
+    .slide-in {
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
 
-@keyframes rotate-gradient {
-    0% {
-        filter: hue-rotate(0deg);
-    }
-    100% {
-        filter: hue-rotate(360deg);
-    }
-}
-
-/* Smooth Scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Custom Scrollbar - Dark Theme */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e293b;
+    background: var(--light-grey);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #9333ea 0%, #ec4899 100%);
-    border-radius: 6px;
-    border: 2px solid #1e293b;
+    background: #CBD5E0;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #a855f7 0%, #f472b6 100%);
+    background: #A0AEC0;
 }
 
-/* Glassmorphism utility - Dark Version */
-.glass {
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(148, 163, 184, 0.1);
+/* Utility Classes */
+.text-electric-blue {
+    color: var(--electric-blue);
 }
 
-.glass-vibrant {
-    background: rgba(147, 51, 234, 0.1);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(147, 51, 234, 0.3);
+.bg-electric-blue {
+    background-color: var(--electric-blue);
 }
 
-/* Gradient Text */
-.gradient-text {
-    background: linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.bg-light-grey {
+    background-color: var(--light-grey);
 }
 
-.gradient-text-teal {
-    background: linear-gradient(135deg, #14b8a6 0%, #10b981 50%, #06b6d4 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.bg-light-blue {
+    background-color: var(--light-blue);
 }
 
-/* Glowing Buttons */
-.btn-glow {
-    box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
-    transition: all 0.3s ease;
-}
-
-.btn-glow:hover {
-    box-shadow: 0 0 30px rgba(147, 51, 234, 0.8);
-    transform: translateY(-2px);
-}
-
-/* Vibrant Card */
-.card-vibrant {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border: 2px solid transparent;
-    background-clip: padding-box;
-    position: relative;
-}
-
-.card-vibrant::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(135deg, #9333ea, #ec4899, #3b82f6);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-}
-
-/* Progress Ring Animation */
-@keyframes progress-ring {
-    from {
-        stroke-dashoffset: 440;
-    }
-}
-
-/* Floating Animation */
-.animate-float {
-    animation: float 3s ease-in-out infinite;
-}
-
-/* Slide In Animation */
-.animate-slide-in {
-    animation: slideIn 0.6s ease-out;
-}
-
-/* Pulse Glow Animation */
-.animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Animation delays */
-.delay-100 {
-    animation-delay: 0.1s;
-}
-
-.delay-200 {
-    animation-delay: 0.2s;
-}
-
-.delay-300 {
-    animation-delay: 0.3s;
-}
-
-.delay-500 {
-    animation-delay: 0.5s;
-}
-
-.delay-1000 {
-    animation-delay: 1s;
-}
-
-.delay-2000 {
-    animation-delay: 2s;
-}
-
-/* Content Section Styling */
-.content-section {
-    background: rgba(30, 41, 59, 0.5);
-    border-left: 4px solid;
-    border-image: linear-gradient(to bottom, #9333ea, #ec4899) 1;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 0.5rem;
-}
-
-/* Interactive Hover Effect */
-.hover-lift {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(147, 51, 234, 0.3);
+.text-grey {
+    color: var(--text-grey);
 }
