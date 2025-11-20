@@ -1,4 +1,12 @@
-averageScore: number;
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { TrendingUp, BookOpen, Target, Award, ArrowRight, Trophy, Flame } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+interface UserStats {
+    completedModules: number;
+    totalQuizzesTaken: number;
+    averageScore: number;
 }
 
 export const Dashboard: React.FC = () => {
@@ -26,172 +34,136 @@ export const Dashboard: React.FC = () => {
     const userName = localStorage.getItem('userName') || 'Learner';
 
     return (
-        <div className="min-h-screen bg-gray-900">
-            {/* Hero Section with Gradient */}
-            <div className="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
-                <div className="absolute inset-0">
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
-                </div>
-
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                        Welcome back, {userName}!
-                    </h1>
-                    <p className="text-sm text-white/80">
-                        Continue your financial learning journey
-                    </p>
+        <div className="min-h-screen bg-white">
+            {/* Clean Header */}
+            <div className="bg-white border-b border-gray-100">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h1 className="text-3xl font-bold text-black">
+                                Welcome back, {userName}!
+                            </h1>
+                            <p className="text-grey mt-1">Continue your financial learning journey</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2 bg-gold/10 px-4 py-2 rounded-full">
+                                <Flame className="text-gold" size={20} />
+                                <span className="font-semibold text-black">3 Day Streak</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            {/* Main Content */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Stats Grid */}
                 {isLoading ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                         {[1, 2, 3].map((i) => (
-                            <div key={i} className="card-vibrant rounded-2xl p-8 h-40 animate-pulse"></div>
+                            <div key={i} className="card-white h-40 animate-pulse bg-gray-100"></div>
                         ))}
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                        <div className="card-vibrant rounded-2xl p-6 hover-lift">
+                        <div className="card-white">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
-                                    <BookOpen className="text-white" size={24} />
+                                <div className="p-3 rounded-full bg-electric-blue/10">
+                                    <BookOpen className="text-electric-blue" size={24} />
                                 </div>
                             </div>
-                            <div className="text-3xl font-bold gradient-text mb-2">
+                            <div className="text-4xl font-bold text-black mb-2">
                                 {stats?.completedModules || 0}
                             </div>
-                            <div className="text-gray-400 font-medium">Modules Completed</div>
+                            <div className="text-grey font-medium">Modules Completed</div>
                         </div>
 
-                        <div className="card-vibrant rounded-2xl p-6 hover-lift">
+                        <div className="card-white">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
-                                    <Target className="text-white" size={24} />
+                                <div className="p-3 rounded-full bg-electric-blue/10">
+                                    <Target className="text-electric-blue" size={24} />
                                 </div>
                             </div>
-                            <div className="text-3xl font-bold gradient-text mb-2">
+                            <div className="text-4xl font-bold text-black mb-2">
                                 {stats?.totalQuizzesTaken || 0}
                             </div>
-                            <div className="text-gray-400 font-medium">Quizzes Taken</div>
+                            <div className="text-grey font-medium">Quizzes Taken</div>
                         </div>
 
-                        <div className="card-vibrant rounded-2xl p-6 hover-lift">
+                        <div className="card-white">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
-                                    <Award className="text-white" size={24} />
+                                <div className="p-3 rounded-full bg-electric-blue/10">
+                                    <Award className="text-electric-blue" size={24} />
                                 </div>
                             </div>
-                            <div className="text-3xl font-bold gradient-text mb-2">
+                            <div className="text-4xl font-bold text-black mb-2">
                                 {stats?.averageScore || 0}%
                             </div>
-                            <div className="text-gray-400 font-medium">Average Score</div>
+                            <div className="text-grey font-medium">Average Score</div>
                         </div>
                     </div>
                 )}
 
-                {/* Quick Actions Grid */}
-                <div className="grid md:grid-cols-2 gap-6 mb-12">
+                {/* Quick Actions - Grid Cards */}
+                <h2 className="text-2xl font-bold text-black mb-6">Your Learning Paths</h2>
+                <div className="grid-cards mb-12">
                     <Link to="/learning" className="block group">
-                        <div className="card-vibrant rounded-2xl p-8 hover-lift h-full">
-                            <div className="flex items-start justify-between mb-6">
-                                <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500">
-                                    <BookOpen className="text-white" size={32} />
+                        <div className="card-white h-full">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-4 rounded-full bg-electric-blue">
+                                    <BookOpen className="text-white" size={28} />
                                 </div>
-                                <ArrowRight className="text-gray-400 group-hover:text-purple-400 transition-colors" size={24} />
+                                <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-3">Continue Learning</h3>
-                            <p className="text-gray-400 mb-4">
-                                Explore learning paths and master new financial concepts
+                            <h3 className="text-xl font-bold text-black mb-2">Continue Learning</h3>
+                            <p className="text-grey text-sm mb-4">
+                                Master budgeting, saving, and investing
                             </p>
-                            <div className="inline-flex items-center gap-2 text-purple-400 font-medium">
-                                Browse Modules
+                            <div className="progress-bar mb-2">
+                                <div className="progress-fill" style={{ width: '45%' }}></div>
                             </div>
+                            <p className="text-xs text-grey">45% Complete</p>
                         </div>
                     </Link>
 
                     <Link to="/investments" className="block group">
-                        <div className="card-vibrant rounded-2xl p-8 hover-lift h-full">
-                            <div className="flex items-start justify-between mb-6">
-                                <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500">
-                                    <TrendingUp className="text-white" size={32} />
+                        <div className="card-white h-full">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-4 rounded-full bg-electric-blue">
+                                    <TrendingUp className="text-white" size={28} />
                                 </div>
-                                <ArrowRight className="text-gray-400 group-hover:text-purple-400 transition-colors" size={24} />
+                                <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-3">Explore Investments</h3>
-                            <p className="text-gray-400 mb-4">
-                                Discover investment opportunities tailored for Kenya
+                            <h3 className="text-xl font-bold text-black mb-2">Explore Investments</h3>
+                            <p className="text-grey text-sm mb-4">
+                                Discover opportunities in Kenya
                             </p>
-                            <div className="inline-flex items-center gap-2 text-purple-400 font-medium">
-                                View Opportunities
-                            </div>
+                            <span className="badge-blue">7 Available</span>
                         </div>
                     </Link>
                 </div>
 
-                {/* Achievement Banner */}
+                {/* Achievement Section */}
                 {stats && stats.completedModules > 0 && (
-                    <div className="card-vibrant rounded-2xl p-8 mb-8 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-full blur-3xl"></div>
-                        <div className="relative flex items-center gap-6">
+                    <div className="card-white mb-8 bg-light-blue border-2 border-electric-blue/20">
+                        <div className="flex items-center gap-6">
                             <div className="flex-shrink-0">
-                                <div className="p-6 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 animate-pulse-glow">
-                                    <Trophy className="text-white" size={48} />
+                                <div className="p-5 rounded-full bg-gold">
+                                    <Trophy className="text-white" size={36} />
                                 </div>
                             </div>
                             <div className="flex-1">
-                                <h3 className="text-2xl font-bold text-white mb-2">
+                                <h3 className="text-xl font-bold text-black mb-2">
                                     🎉 Great Progress!
                                 </h3>
-                                <p className="text-gray-300 text-lg">
-                                    You've completed <span className="text-yellow-400 font-bold">{stats.completedModules}</span> modules.
-                                    Keep up the amazing work and continue growing your financial knowledge!
+                                <p className="text-grey">
+                                    You've completed <span className="text-electric-blue font-bold">{stats.completedModules}</span> modules.
+                                    Keep learning to achieve your financial goals!
                                 </p>
                             </div>
                         </div>
                     </div>
                 )}
-
-                {/* Learning Tips */}
-                <div className="glass rounded-2xl p-8">
-                    <h3 className="text-2xl font-bold text-white mb-6">💡 Tips for Success</h3>
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <div className="flex items-start gap-4">
-                            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                                <span className="text-2xl">📚</span>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold text-white mb-1">Learn Consistently</h4>
-                                <p className="text-gray-400 text-sm">
-                                    Set aside time each day to study and complete modules
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-4">
-                            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                <span className="text-2xl">🎯</span>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold text-white mb-1">Practice with Quizzes</h4>
-                                <p className="text-gray-400 text-sm">
-                                    Test your knowledge to reinforce what you've learned
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-4">
-                            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center">
-                                <span className="text-2xl">💸</span>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold text-white mb-1">Apply Your Knowledge</h4>
-                                <p className="text-gray-400 text-sm">
-                                    Start small investments based on what you learn
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );
