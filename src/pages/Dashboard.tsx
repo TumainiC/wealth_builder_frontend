@@ -1,13 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Card } from '../components/ui/Card';
-import { TrendingUp, BookOpen, Target, Award, ArrowRight, Zap, Trophy } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-interface UserStats {
-    completedModules: number;
-    totalQuizzesTaken: number;
-    averageScore: number;
+averageScore: number;
 }
 
 export const Dashboard: React.FC = () => {
