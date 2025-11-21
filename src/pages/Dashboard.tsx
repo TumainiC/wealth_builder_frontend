@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { TrendingUp, BookOpen, Target, Award, ArrowRight, Trophy, Flame } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface UserStats {
     completedModules: number;
@@ -14,10 +14,12 @@ interface UserStats {
 export const Dashboard: React.FC = () => {
     const [stats, setStats] = useState<UserStats | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
+                setIsLoading(true);
                 const token = localStorage.getItem('token');
                 const response = await axios.get('http://localhost:5000/api/users/progress', {
                     headers: { Authorization: `Bearer ${token}` }
@@ -31,7 +33,7 @@ export const Dashboard: React.FC = () => {
         };
 
         fetchStats();
-    }, []);
+    }, [location]);
 
     const userName = localStorage.getItem('userName') || 'Learner';
 
