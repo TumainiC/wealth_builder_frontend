@@ -14,6 +14,8 @@ import { Landing } from './pages/Landing';
 import { Profile } from './pages/Profile';
 import { TermsAndConditions } from './pages/Legal/TermsAndConditions';
 import { PrivacyPolicy } from './pages/Legal/PrivacyPolicy';
+import { SocketProvider } from './context/SocketContext';
+import { BackendMonitor } from './components/BackendMonitor';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { isAuthenticated } = useAuth();
@@ -26,71 +28,74 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 function App() {
     return (
         <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/terms" element={<TermsAndConditions />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/learning"
-                        element={
-                            <ProtectedRoute>
-                                <PathList />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/learning/module/:id"
-                        element={
-                            <ProtectedRoute>
-                                <ModuleDetail />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/investments"
-                        element={
-                            <ProtectedRoute>
-                                <InvestmentList />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/investments/:id"
-                        element={
-                            <ProtectedRoute>
-                                <InvestmentDetail />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/investments/register-business"
-                        element={
-                            <ProtectedRoute>
-                                <BusinessRegistration />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/profile"
-                        element={
-                            <ProtectedRoute>
-                                <Profile />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route path="/" element={<Landing />} />
-                </Routes>
-            </Router>
+            <SocketProvider>
+                <BackendMonitor />
+                <Router>
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/terms" element={<TermsAndConditions />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <ProtectedRoute>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/learning"
+                            element={
+                                <ProtectedRoute>
+                                    <PathList />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/learning/module/:id"
+                            element={
+                                <ProtectedRoute>
+                                    <ModuleDetail />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/investments"
+                            element={
+                                <ProtectedRoute>
+                                    <InvestmentList />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/investments/:id"
+                            element={
+                                <ProtectedRoute>
+                                    <InvestmentDetail />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/investments/register-business"
+                            element={
+                                <ProtectedRoute>
+                                    <BusinessRegistration />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <ProtectedRoute>
+                                    <Profile />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route path="/" element={<Landing />} />
+                    </Routes>
+                </Router>
+            </SocketProvider>
         </AuthProvider>
     );
 }

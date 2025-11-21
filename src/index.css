@@ -203,6 +203,23 @@ h3 {
     }
 }
 
+/* Sungu Mascot Animations */
+.sungu-float {
+    animation: sungu-float 3s ease-in-out infinite;
+}
+
+@keyframes sungu-float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
