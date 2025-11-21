@@ -7,6 +7,8 @@ interface UserStats {
     completedModules: number;
     totalQuizzesTaken: number;
     averageScore: number;
+    streakDays: number;
+    overallProgress: number;
 }
 
 export const Dashboard: React.FC = () => {
@@ -48,7 +50,9 @@ export const Dashboard: React.FC = () => {
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2 bg-gold/10 px-4 py-2 rounded-full">
                                 <Flame className="text-gold" size={20} />
-                                <span className="font-semibold text-black">3 Day Streak</span>
+                                <span className="font-semibold text-black">
+                                    {stats?.streakDays || 0} Day Streak
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -104,65 +108,107 @@ export const Dashboard: React.FC = () => {
                     </div>
                 )}
 
-                {/* Quick Actions - Grid Cards */}
-                <h2 className="text-2xl font-bold text-black mb-6">Your Learning Paths</h2>
-                <div className="grid-cards mb-12">
-                    <Link to="/learning" className="block group">
-                        <div className="card-white h-full">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-4 rounded-full bg-electric-blue">
-                                    <BookOpen className="text-white" size={28} />
+                {/* Conditional Content based on user progress */}
+                {stats && (stats.completedModules > 0 || stats.overallProgress > 0) ? (
+                    <>
+                        {/* Active User - Continue Learning */}
+                        <h2 className="text-2xl font-bold text-black mb-6">Your Learning Paths</h2>
+                        <div className="grid-cards mb-12">
+                            <Link to="/learning" className="block group">
+                                <div className="card-white h-full">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="p-4 rounded-full bg-electric-blue">
+                                            <BookOpen className="text-white" size={28} />
+                                        </div>
+                                        <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-black mb-2">Continue Learning</h3>
+                                    <p className="text-grey text-sm mb-4">
+                                        Master budgeting, saving, and investing
+                                    </p>
+                                    <div className="progress-bar mb-2">
+                                        <div className="progress-fill" style={{ width: `${stats.overallProgress}%` }}></div>
+                                    </div>
+                                    <p className="text-xs text-grey">{stats.overallProgress}% Complete</p>
                                 </div>
-                                <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
-                            </div>
-                            <h3 className="text-xl font-bold text-black mb-2">Continue Learning</h3>
-                            <p className="text-grey text-sm mb-4">
-                                Master budgeting, saving, and investing
-                            </p>
-                            <div className="progress-bar mb-2">
-                                <div className="progress-fill" style={{ width: '45%' }}></div>
-                            </div>
-                            <p className="text-xs text-grey">45% Complete</p>
-                        </div>
-                    </Link>
+                            </Link>
 
-                    <Link to="/investments" className="block group">
-                        <div className="card-white h-full">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-4 rounded-full bg-electric-blue">
-                                    <TrendingUp className="text-white" size={28} />
+                            <Link to="/investments" className="block group">
+                                <div className="card-white h-full">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="p-4 rounded-full bg-electric-blue">
+                                            <TrendingUp className="text-white" size={28} />
+                                        </div>
+                                        <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-black mb-2">Explore Investments</h3>
+                                    <p className="text-grey text-sm mb-4">
+                                        Discover opportunities in Kenya
+                                    </p>
+                                    <span className="badge-blue">7 Available</span>
                                 </div>
-                                <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
-                            </div>
-                            <h3 className="text-xl font-bold text-black mb-2">Explore Investments</h3>
-                            <p className="text-grey text-sm mb-4">
-                                Discover opportunities in Kenya
-                            </p>
-                            <span className="badge-blue">7 Available</span>
+                            </Link>
                         </div>
-                    </Link>
-                </div>
 
-                {/* Achievement Section */}
-                {stats && stats.completedModules > 0 && (
-                    <div className="card-white mb-8 bg-light-blue border-2 border-electric-blue/20">
-                        <div className="flex items-center gap-6">
-                            <div className="flex-shrink-0">
-                                <div className="p-5 rounded-full bg-gold">
-                                    <Trophy className="text-white" size={36} />
+                        {/* Achievement Section */}
+                        {stats.completedModules > 0 && (
+                            <div className="card-white mb-8 bg-light-blue border-2 border-electric-blue/20">
+                                <div className="flex items-center gap-6">
+                                    <div className="flex-shrink-0">
+                                        <div className="p-5 rounded-full bg-gold">
+                                            <Trophy className="text-white" size={36} />
+                                        </div>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-xl font-bold text-black mb-2">
+                                            🎉 Great Progress!
+                                        </h3>
+                                        <p className="text-grey">
+                                            You've completed <span className="text-electric-blue font-bold">{stats.completedModules}</span> modules.
+                                            Keep learning to achieve your financial goals!
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex-1">
-                                <h3 className="text-xl font-bold text-black mb-2">
-                                    🎉 Great Progress!
-                                </h3>
-                                <p className="text-grey">
-                                    You've completed <span className="text-electric-blue font-bold">{stats.completedModules}</span> modules.
-                                    Keep learning to achieve your financial goals!
-                                </p>
-                            </div>
+                        )}
+                    </>
+                ) : (
+                    <>
+                        {/* New User - Get Started */}
+                        <h2 className="text-2xl font-bold text-black mb-6">Get Started with Your Financial Journey</h2>
+                        <div className="grid-cards mb-12">
+                            <Link to="/learning" className="block group">
+                                <div className="card-white h-full">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="p-4 rounded-full bg-electric-blue">
+                                            <BookOpen className="text-white" size={28} />
+                                        </div>
+                                        <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-black mb-2">Choose Your Learning Path</h3>
+                                    <p className="text-grey text-sm">
+                                        Browse beginner, intermediate, and advanced paths to start your financial literacy journey
+                                    </p>
+                                </div>
+                            </Link>
+
+                            <Link to="/investments" className="block group">
+                                <div className="card-white h-full">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="p-4 rounded-full bg-electric-blue">
+                                            <TrendingUp className="text-white" size={28} />
+                                        </div>
+                                        <ArrowRight className="text-grey group-hover:text-electric-blue transition-colors" size={20} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-black mb-2">Explore Investments</h3>
+                                    <p className="text-grey text-sm mb-4">
+                                        Discover opportunities in Kenya
+                                    </p>
+                                    <span className="badge-blue">7 Available</span>
+                                </div>
+                            </Link>
                         </div>
-                    </div>
+                    </>
                 )}
             </div>
         </div>
